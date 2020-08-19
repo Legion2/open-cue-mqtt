@@ -23,9 +23,18 @@ mqtt.topic.sdk=home/open-cue-mqtt/sdk
 ```
 Run the Open CUE MQTT Adapter by executing `open-cue-mqtt.bat` or `./open-cue-mqtt`.
 
-## MQTT messages
+### MQTT messages
 The messages send to the adapter must be plain text.
 On the profile topic just send the name of the profile you want to be activated (all other profiles will be deactivated).
 On the SDK topic `true` or `false` can be send.
 
-When sending message to the topics use retained messages so they can be automatically applied at start.
+When sending message to the topics use retained messages so they can be automatically applied at startup.
+
+### Run at PC start
+To run Open CUE MQTT Adapter when the PC is started on windows the task scheduler can be used.
+Setup a new task, which is triggered 30 seconds after the used logged in.
+The task should run the `open-cue-mqtt.bat` in the directory where also the `config.properties` file is.
+It should run as the user which logged in and does not require administrator permissions.
+
+Do the same for the Open CUE Service.
+But it should start without delay when the used logged in.
