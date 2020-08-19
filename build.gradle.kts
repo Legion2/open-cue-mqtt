@@ -1,6 +1,7 @@
 plugins {
-    kotlin("jvm") version "1.3.72"
+    kotlin("jvm") version "1.4.0"
     application
+    id("org.beryx.runtime") version "1.11.3"
 }
 
 repositories {
@@ -14,8 +15,33 @@ application {
     applicationName = "open-cue-mqtt"
 }
 
+runtime {
+    addOptions("--strip-debug", "--compress", "2", "--no-header-files", "--no-man-pages")
+    addModules("java.base",
+            "java.sql",//because of gson
+            "jdk.unsupported"//https://stackoverflow.com/questions/61727613/unexpected-behaviour-from-gson
+    )
+
+    imageZip.set(file("$buildDir/${project.application.applicationName}.zip"))
+    targetPlatform("linux-x64") {
+        setJdkHome(jdkDownload("https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_x64_linux_hotspot_14.0.2_12.tar.gz"))
+    }
+    targetPlatform("linux-aarch64") {
+        setJdkHome(jdkDownload("https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_aarch64_linux_hotspot_14.0.2_12.tar.gz"))
+    }
+    targetPlatform("linux-arm32") {
+        setJdkHome(jdkDownload("https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_arm_linux_hotspot_14.0.2_12.tar.gz"))
+    }
+    targetPlatform("windows-x64") {
+        setJdkHome(jdkDownload("https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_x64_windows_hotspot_14.0.2_12.zip"))
+    }
+    targetPlatform("mac-x64") {
+        setJdkHome(jdkDownload("https://github.com/AdoptOpenJDK/openjdk14-binaries/releases/download/jdk-14.0.2%2B12/OpenJDK14U-jdk_x64_mac_hotspot_14.0.2_12.tar.gz"))
+    }
+}
+
 val ktorVersion = "1.3.2"
-val pahoVersion = "1.2.4"
+val pahoVersion = "1.2.5"
 val konfigVersion = "1.6.10.0"
 dependencies {
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:$pahoVersion")
@@ -28,14 +54,13 @@ dependencies {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
-        languageVersion = "1.3"
-        apiVersion = "1.3"
-        freeCompilerArgs += "-Xopt-in=com.github.ajalt.clikt.completion.ExperimentalCompletionCandidates"
+        jvmTarget = "14"
+        languageVersion = "1.4"
+        apiVersion = "1.4"
     }
 }
 
 tasks.withType<Wrapper> {
-    gradleVersion = "6.3"
+    gradleVersion = "6.6"
     distributionType = Wrapper.DistributionType.ALL
 }

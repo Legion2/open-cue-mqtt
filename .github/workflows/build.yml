@@ -1,0 +1,20 @@
+name: Build
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.1
+        with:
+          java-version: 14
+      - name: Gradle Build
+        run: gradle runtimeZip
+      - name: Upload distribution archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: open-cue-mqtt
+          path: build/open-cue-mqtt-*.zip
