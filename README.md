@@ -1,4 +1,4 @@
-# open-cue-mqtt
+# Open CUE MQTT Adapter ![Build](https://github.com/Legion2/open-cue-mqtt/workflows/Build/badge.svg)
 MQTT Adapter for Open CUE Service.
 Synchronize a MQTT topic with the Open CUE Service to set and change profiles.
 
