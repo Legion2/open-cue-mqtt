@@ -40,7 +40,7 @@ runtime {
     }
 }
 
-val ktorVersion = "1.5.1"
+val ktorVersion = "1.5.2"
 val pahoVersion = "1.2.5"
 val konfigVersion = "1.6.10.0"
 dependencies {
