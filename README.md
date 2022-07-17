@@ -32,7 +32,7 @@ When sending message to the topics use retained messages so they can be automati
 
 ### Run at PC start
 To run Open CUE MQTT Adapter when the PC is started on windows the task scheduler can be used.
-Setup a new task, which is triggered 30 seconds after the used logged in.
+Setup a new task, which is triggered 30 seconds after the user(you) logged in.
 The task should run the `open-cue-mqtt.bat` in the directory where also the `config.properties` file is.
 It should run as the user which logged in and does not require administrator permissions.
 
