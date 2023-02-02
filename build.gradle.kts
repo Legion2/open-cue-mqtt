@@ -1,5 +1,5 @@
 plugins {
-    kotlin("jvm") version "1.6.21"
+    kotlin("jvm") version "1.8.10"
     application
     id("org.beryx.runtime") version "1.13.0"
 }
